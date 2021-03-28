@@ -11,9 +11,26 @@ import { RouteService } from './route.service'
 })
 export class RoutesComponent implements OnInit, OnDestroy {
   sub!: Subscription;
+
+  private _routeFilter = "";
+  get routeFilter(): string {
+    return this._routeFilter
+  }
+  set routeFilter(value: string) {
+    this._routeFilter = value;
+    this.filteredRoutes = this.performFilter(value);
+  }
+
+  filteredRoutes: IRoute[] = [];
   routes: IRoute[] = [];
 
   constructor(private routeService: RouteService) {}
+
+  performFilter(filterBy: string): IRoute[] {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.routes.filter((route: IRoute) =>
+      route.location.toLocaleLowerCase().includes(filterBy));
+  }
 
   ngOnInit(): void {
     this.sub = this.routeService.getRoutes().subscribe({

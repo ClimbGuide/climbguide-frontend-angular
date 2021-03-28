@@ -1,5 +1,8 @@
-<p>routes works!</p>
+<p>
+    <input placeholder="Search Route Locations"type="text" [(ngModel)]='routeFilter'/>
+</p>
 
-<div *ngFor='let route of routes'>
+
+<div *ngFor='let route of filteredRoutes'>
     <div>{{ route.name }}</div>
 </div>
